@@ -1,0 +1,6 @@
+(function(root){
+function grade(answers,key){const score=key.reduce((n,a,i)=>n+(answers[i]===a),0);return {score,passed:score>=Math.ceil(key.length*.75)};}
+function complete(state,read,confirmed,score,date){if(!confirmed||score<3)throw Error('请完成阅读并在小测中答对至少 3 题');const s=JSON.parse(JSON.stringify(state));s.done=s.done||{};s.dates=s.dates||[];if(!s.done[read]){s.done[read]={date,score};if(!s.dates.includes(date))s.dates.push(date);}return s;}
+function restore(raw){try{const s=JSON.parse(raw);if(!s||typeof s!=='object'||Array.isArray(s))return {};for(const k of ['done','read','quizzes','notes'])if(s[k]&&(typeof s[k]!=='object'||Array.isArray(s[k])))return {};if(s.done&&!Object.entries(s.done).every(([k,x])=>/^[0-5]$/.test(k)&&x&&typeof x.date==='string'&&Number.isInteger(x.score)&&x.score>=3&&x.score<=4))return {};if(s.dates&&(!Array.isArray(s.dates)||!s.dates.every(x=>typeof x==='string')))return {};if(s.quizzes&&!Object.values(s.quizzes).every(x=>x&&Number.isInteger(x.score)&&x.score>=0&&x.score<=4&&Array.isArray(x.answers)))return {};if(s.notes&&!Object.values(s.notes).every(x=>typeof x==='string'))return {};return s;}catch{return {};}}
+const api={grade,complete,restore};if(typeof module!=='undefined')module.exports=api;else root.Camp=api;
+})(globalThis);

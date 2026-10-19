@@ -1,2 +1,5 @@
-# circuit-six-days
-电路拾阶：从高中物理到戴维南与诺顿定理的六日学习打卡网页
+# 电路拾阶
+
+六日直流电路学习营。在线地址：https://ccczb66.github.io/circuit-six-days/
+
+学习记录仅保存在使用者的浏览器中。
